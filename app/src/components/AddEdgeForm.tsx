@@ -11,12 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
-interface AddEdgeFormProps {
-  nodes: Node[];
-  onAddEdge: (source: string, target: string, relationType: string) => void; // Changed label to relationType
-}
-
-const RELATION_TYPES = [
+export const RELATION_TYPES = [
   { value: 'rival', label: 'ライバル' },
   { value: 'master_apprentice', label: '師匠と弟子' },
   { value: 'inheritance', label: '継承' },
@@ -24,11 +19,16 @@ const RELATION_TYPES = [
   { value: 'other', label: 'その他' }, // Fallback for custom labels
 ];
 
+interface AddEdgeFormProps {
+  nodes: Node[];
+  onAddEdge: (source: string, target: string, relationType: string) => void; 
+}
+
 export default function AddEdgeForm({ nodes, onAddEdge }: AddEdgeFormProps) {
   const [source, setSource] = useState('');
   const [target, setTarget] = useState('');
-  const [relationType, setRelationType] = useState(''); // Changed label to relationType
-  const [customLabel, setCustomLabel] = useState(''); // For 'その他' option
+  const [relationType, setRelationType] = useState(''); 
+  const [customLabel, setCustomLabel] = useState(''); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

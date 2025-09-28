@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { BaseEdge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType } from 'reactflow';
+import { BaseEdge, EdgeLabelRenderer, EdgeProps, getBezierPath, MarkerType } from 'reactflow'; // Added MarkerType
 import { useTheme } from '@mui/material/styles';
+import { RELATION_TYPES } from './AddEdgeForm'; 
 
 export default function CustomEdge({
   id,
@@ -14,8 +15,6 @@ export default function CustomEdge({
   targetPosition,
   style = {},
   data,
-  markerEnd,
-  markerStart,
 }: EdgeProps) {
   const theme = useTheme();
   const [edgePath, labelX, labelY] = getBezierPath({
@@ -28,8 +27,8 @@ export default function CustomEdge({
   });
 
   let strokeColor = theme.palette.text.secondary; // Default color
-  let finalMarkerEnd = markerEnd;
-  let finalMarkerStart = markerStart;
+  let finalMarkerEnd = { type: MarkerType.ArrowClosed, color: strokeColor };
+  let finalMarkerStart = undefined;
   let strokeWidth = 2; // Default thickness
 
   if (data?.relationType) {
@@ -68,6 +67,9 @@ export default function CustomEdge({
     }
   }
 
+  // Get the Japanese label for the relationType
+  const displayLabel = RELATION_TYPES.find(type => type.value === data?.relationType)?.label || data?.relationType || '関係';
+
   return (
     <>
       <BaseEdge 
@@ -92,7 +94,7 @@ export default function CustomEdge({
           }}
           className="nodrag nopan"
         >
-          {data?.relationType || '関係'}
+          {displayLabel}
         </div>
       </EdgeLabelRenderer>
     </>

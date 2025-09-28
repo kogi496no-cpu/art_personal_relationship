@@ -1,6 +1,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --react-flow__arrowhead-size: 20px; /* Adjust as needed */
 }
 
 @media (prefers-color-scheme: dark) {

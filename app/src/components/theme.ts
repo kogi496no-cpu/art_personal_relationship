@@ -1,6 +1,7 @@
 'use client';
 import { Noto_Serif_JP } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
+import { jaJP } from '@mui/material/locale'; // Import Japanese locale
 
 const notoSerifJp = Noto_Serif_JP({
   weight: ['300', '400', '500', '700'],
@@ -35,6 +36,6 @@ const theme = createTheme({
       color: '#5d4037'
     }
   },
-});
+}, jaJP); // Pass Japanese locale to createTheme
 
 export default theme;
