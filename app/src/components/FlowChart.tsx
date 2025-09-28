@@ -31,8 +31,10 @@ import NodeDetail from './NodeDetail';
 import AddEdgeForm from './AddEdgeForm';
 import DownloadButton from './DownloadButton';
 import UploadButton from './UploadButton';
+import CustomEdge from './CustomEdge'; // Import the custom edge
 
 const defaultEdgeOptions = {
+  // Default options are now handled by CustomEdge, but keep for onConnect if needed
   markerEnd: { type: MarkerType.ArrowClosed },
 };
 
@@ -42,6 +44,7 @@ function FlowChart() {
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
+  const edgeTypes = useMemo(() => ({ custom: CustomEdge }), []); // Define custom edge types
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -76,13 +79,15 @@ function FlowChart() {
     setNodes((nds) => nds.concat(newNode));
   }, [setNodes]);
 
-  const addNewEdge = useCallback((source: string, target: string, label: string) => {
+  const addNewEdge = useCallback((source: string, target: string, relationType: string) => {
     const newEdge = {
       id: `edge-${source}-${target}-${Date.now()}`,
       source,
       target,
-      label,
-      markerEnd: { type: MarkerType.ArrowClosed },
+      label: relationType, // Display the relationType as label
+      type: 'custom', // Set type to custom for custom edge component
+      data: { relationType }, // Pass relationType to custom edge component
+      // markerEnd is now handled by CustomEdge based on relationType
     };
     setEdges((eds) => addEdge(newEdge, eds));
   }, [setEdges]);
@@ -98,6 +103,7 @@ function FlowChart() {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes} // Register the custom edge types
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
