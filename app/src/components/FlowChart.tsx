@@ -28,7 +28,7 @@ import initialEdges from '@/data/edges.json';
 import AddNodeForm from './AddNodeForm';
 import CustomNode from './CustomNode';
 import NodeDetail from './NodeDetail';
-import AddEdgeForm from './AddEdgeForm'; // Import the new form
+import AddEdgeForm from './AddEdgeForm';
 
 const defaultEdgeOptions = {
   markerEnd: { type: MarkerType.ArrowClosed },
@@ -58,12 +58,18 @@ function FlowChart() {
     setSelectedNode(node);
   }, []);
 
-  const addNode = useCallback((label: string, era: string) => {
+  const addNode = useCallback((data: { label: string; era: string; description: string; masterpieces: string }) => {
+    const { label, era, description, masterpieces } = data;
     const newNode: Node = {
       id: `node-${Date.now()}`,
       type: 'custom',
       position: { x: Math.random() * 400, y: Math.random() * 400 },
-      data: { label, era },
+      data: {
+        label,
+        era,
+        description,
+        masterpieces: masterpieces ? masterpieces.split(',').map(s => s.trim()) : [],
+      },
     };
     setNodes((nds) => nds.concat(newNode));
   }, [setNodes]);
@@ -74,6 +80,7 @@ function FlowChart() {
       source,
       target,
       label,
+      markerEnd: { type: MarkerType.ArrowClosed }, // Ensure new edges also have arrows
     };
     setEdges((eds) => addEdge(newEdge, eds));
   }, [setEdges]);
