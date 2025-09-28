@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -13,12 +13,20 @@ import ReactFlow, {
   OnEdgesChange,
   OnConnect,
   MarkerType,
+  BackgroundVariant,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 import initialNodes from '@/data/nodes.json';
 import initialEdges from '@/data/edges.json';
 import AddNodeForm from './AddNodeForm';
+import CustomNode from './CustomNode'; // Import the custom node
 
 const defaultEdgeOptions = {
   markerEnd: { type: MarkerType.ArrowClosed },
@@ -27,6 +35,9 @@ const defaultEdgeOptions = {
 function FlowChart() {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
+
+  // Define the custom node types
+  const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -44,7 +55,7 @@ function FlowChart() {
   const addNode = useCallback((label: string, era: string) => {
     const newNode: Node = {
       id: `node-${Date.now()}`,
-      type: 'custom', // or default
+      type: 'custom', // Ensure new nodes are of the custom type
       position: { x: Math.random() * 400, y: Math.random() * 400 },
       data: { label, era },
     };
@@ -52,11 +63,16 @@ function FlowChart() {
   }, [setNodes]);
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
-      <div style={{ flex: '1 1 0%', height: '100%' }}>
+    <Box sx={{ display: 'flex', height: '100vh', width: '100%' }}>
+      <Box sx={{ 
+        flex: '1 1 0%', 
+        height: '100%',
+        bgcolor: 'background.default'
+      }}>
         <ReactFlow
           nodes={nodes}
           edges={edges}
+          nodeTypes={nodeTypes} // Register the custom node types
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
@@ -64,14 +80,31 @@ function FlowChart() {
           defaultEdgeOptions={defaultEdgeOptions}
         >
           <Controls />
-          <Background />
+          <Background variant={BackgroundVariant.Lines} gap={24} color="#ccc" />
         </ReactFlow>
-      </div>
-      <aside style={{ width: '250px', padding: '16px', borderLeft: '1px solid #ccc', background: '#f7f7f7' }}>
-        <h2>操作パネル</h2>
-        <AddNodeForm onAddNode={addNode} />
-      </aside>
-    </div>
+      </Box>
+      <Card 
+        variant="outlined"
+        sx={{
+          width: '320px',
+          margin: 2,
+          position: 'absolute',
+          right: 0,
+          top: 16,
+          maxHeight: 'calc(100vh - 32px)',
+          overflowY: 'auto',
+          background: 'rgba(255, 255, 255, 0.9)' // Slightly transparent card
+        }}
+      >
+        <CardContent>
+          <Typography variant="h5" component="h2" gutterBottom>
+            操作パネル
+          </Typography>
+          <Divider sx={{ my: 2 }} />
+          <AddNodeForm onAddNode={addNode} />
+        </CardContent>
+      </Card>
+    </Box>
   );
 }
 
