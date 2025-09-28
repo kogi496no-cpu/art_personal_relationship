@@ -4,13 +4,53 @@
     "source": "2",
     "target": "1",
     "label": "師匠",
-    "markerEnd": { "type": "arrowclosed" }
+    "markerEnd": {
+      "type": "arrowclosed"
+    }
   },
   {
     "id": "e1-3",
     "source": "1",
     "target": "3",
     "label": "ライバル",
-    "markerEnd": { "type": "arrowclosed" }
+    "markerEnd": {
+      "type": "arrowclosed"
+    }
+  },
+  {
+    "id": "edge-node-1759037236705-node-1759037269134-1759037287373",
+    "source": "node-1759037236705",
+    "target": "node-1759037269134",
+    "label": "師匠→弟子",
+    "markerEnd": {
+      "type": "arrowclosed"
+    }
+  },
+  {
+    "id": "edge-node-1759037269134-node-1759037432782-1759037446018",
+    "source": "node-1759037269134",
+    "target": "node-1759037432782",
+    "label": "継承",
+    "markerEnd": {
+      "type": "arrowclosed"
+    }
+  },
+  {
+    "id": "edge-node-1759037432782-node-1759037681778-1759037723995",
+    "source": "node-1759037432782",
+    "target": "node-1759037681778",
+    "label": "継承",
+    "markerEnd": {
+      "type": "arrowclosed"
+    }
+  },
+  {
+    "id": "edge-node-1759037821921-node-1759037883286-1759037897222",
+    "source": "node-1759037821921",
+    "target": "node-1759037883286",
+    "label": "師匠→弟子",
+    "markerEnd": {
+      "type": "arrowclosed"
+    }
   }
 ]
