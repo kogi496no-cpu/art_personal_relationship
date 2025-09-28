@@ -29,7 +29,8 @@ import AddNodeForm from './AddNodeForm';
 import CustomNode from './CustomNode';
 import NodeDetail from './NodeDetail';
 import AddEdgeForm from './AddEdgeForm';
-import DownloadButton from './DownloadButton'; // Import the new DownloadButton
+import DownloadButton from './DownloadButton';
+import UploadButton from './UploadButton';
 
 const defaultEdgeOptions = {
   markerEnd: { type: MarkerType.ArrowClosed },
@@ -132,6 +133,10 @@ function FlowChart() {
           <Divider sx={{ my: 2 }} />
           <AddEdgeForm nodes={nodes} onAddEdge={addNewEdge} />
           <Divider sx={{ my: 2 }} />
+          <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>データ読み込み</Typography>
+          <UploadButton onUploadNodes={setNodes} onUploadEdges={setEdges} />
+          <Divider sx={{ my: 2 }} />
+          <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>データ保存</Typography>
           <DownloadButton nodes={nodes} edges={edges} />
         </CardContent>
       </Card>
