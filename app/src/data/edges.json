@@ -1,0 +1,16 @@
+[
+  {
+    "id": "e2-1",
+    "source": "2",
+    "target": "1",
+    "label": "師匠",
+    "markerEnd": { "type": "arrowclosed" }
+  },
+  {
+    "id": "e1-3",
+    "source": "1",
+    "target": "3",
+    "label": "ライバル",
+    "markerEnd": { "type": "arrowclosed" }
+  }
+]

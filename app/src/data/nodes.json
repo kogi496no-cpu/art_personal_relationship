@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "type": "custom",
+    "data": { "label": "レオナルド・ダ・ヴィンチ", "era": "盛期ルネサンス" },
+    "position": { "x": 250, "y": 5 }
+  },
+  {
+    "id": "2",
+    "type": "custom",
+    "data": { "label": "ヴェロッキオ", "era": "初期ルネサンス" },
+    "position": { "x": 100, "y": 100 }
+  },
+  {
+    "id": "3",
+    "type": "custom",
+    "data": { "label": "ミケランジェロ", "era": "盛期ルネサンス" },
+    "position": { "x": 400, "y": 100 }
+  }
+]
