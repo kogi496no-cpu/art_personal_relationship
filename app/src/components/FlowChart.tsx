@@ -26,7 +26,9 @@ import CardContent from '@mui/material/CardContent';
 import initialNodes from '@/data/nodes.json';
 import initialEdges from '@/data/edges.json';
 import AddNodeForm from './AddNodeForm';
-import CustomNode from './CustomNode'; // Import the custom node
+import CustomNode from './CustomNode';
+import NodeDetail from './NodeDetail';
+import AddEdgeForm from './AddEdgeForm'; // Import the new form
 
 const defaultEdgeOptions = {
   markerEnd: { type: MarkerType.ArrowClosed },
@@ -35,8 +37,8 @@ const defaultEdgeOptions = {
 function FlowChart() {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
 
-  // Define the custom node types
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
 
   const onNodesChange: OnNodesChange = useCallback(
@@ -52,15 +54,29 @@ function FlowChart() {
     [setEdges]
   );
 
+  const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
+    setSelectedNode(node);
+  }, []);
+
   const addNode = useCallback((label: string, era: string) => {
     const newNode: Node = {
       id: `node-${Date.now()}`,
-      type: 'custom', // Ensure new nodes are of the custom type
+      type: 'custom',
       position: { x: Math.random() * 400, y: Math.random() * 400 },
       data: { label, era },
     };
     setNodes((nds) => nds.concat(newNode));
   }, [setNodes]);
+
+  const addNewEdge = useCallback((source: string, target: string, label: string) => {
+    const newEdge = {
+      id: `edge-${source}-${target}-${Date.now()}`,
+      source,
+      target,
+      label,
+    };
+    setEdges((eds) => addEdge(newEdge, eds));
+  }, [setEdges]);
 
   return (
     <Box sx={{ display: 'flex', height: '100vh', width: '100%' }}>
@@ -72,10 +88,11 @@ function FlowChart() {
         <ReactFlow
           nodes={nodes}
           edges={edges}
-          nodeTypes={nodeTypes} // Register the custom node types
+          nodeTypes={nodeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
+          onNodeClick={onNodeClick}
           fitView
           defaultEdgeOptions={defaultEdgeOptions}
         >
@@ -93,7 +110,7 @@ function FlowChart() {
           top: 16,
           maxHeight: 'calc(100vh - 32px)',
           overflowY: 'auto',
-          background: 'rgba(255, 255, 255, 0.9)' // Slightly transparent card
+          background: 'rgba(255, 255, 255, 0.9)'
         }}
       >
         <CardContent>
@@ -101,7 +118,11 @@ function FlowChart() {
             操作パネル
           </Typography>
           <Divider sx={{ my: 2 }} />
+          <NodeDetail node={selectedNode} />
+          <Divider sx={{ my: 2 }} />
           <AddNodeForm onAddNode={addNode} />
+          <Divider sx={{ my: 2 }} />
+          <AddEdgeForm nodes={nodes} onAddEdge={addNewEdge} />
         </CardContent>
       </Card>
     </Box>
