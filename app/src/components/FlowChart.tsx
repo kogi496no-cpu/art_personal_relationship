@@ -29,6 +29,7 @@ import AddNodeForm from './AddNodeForm';
 import CustomNode from './CustomNode';
 import NodeDetail from './NodeDetail';
 import AddEdgeForm from './AddEdgeForm';
+import DownloadButton from './DownloadButton'; // Import the new DownloadButton
 
 const defaultEdgeOptions = {
   markerEnd: { type: MarkerType.ArrowClosed },
@@ -80,7 +81,7 @@ function FlowChart() {
       source,
       target,
       label,
-      markerEnd: { type: MarkerType.ArrowClosed }, // Ensure new edges also have arrows
+      markerEnd: { type: MarkerType.ArrowClosed },
     };
     setEdges((eds) => addEdge(newEdge, eds));
   }, [setEdges]);
@@ -130,6 +131,8 @@ function FlowChart() {
           <AddNodeForm onAddNode={addNode} />
           <Divider sx={{ my: 2 }} />
           <AddEdgeForm nodes={nodes} onAddEdge={addNewEdge} />
+          <Divider sx={{ my: 2 }} />
+          <DownloadButton nodes={nodes} edges={edges} />
         </CardContent>
       </Card>
     </Box>
