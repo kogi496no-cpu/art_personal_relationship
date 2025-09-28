@@ -11,26 +11,43 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
+export const RELATION_TYPES = [
+  { value: 'rival', label: 'ライバル' },
+  { value: 'master_apprentice', label: '師匠と弟子' },
+  { value: 'inheritance', label: '継承' },
+  { value: 'patron', label: 'パトロン' },
+  { value: 'other', label: 'その他' }, // Fallback for custom labels
+];
+
 interface AddEdgeFormProps {
   nodes: Node[];
-  onAddEdge: (source: string, target: string, label: string) => void;
+  onAddEdge: (source: string, target: string, relationType: string) => void; 
 }
 
 export default function AddEdgeForm({ nodes, onAddEdge }: AddEdgeFormProps) {
   const [source, setSource] = useState('');
   const [target, setTarget] = useState('');
-  const [label, setLabel] = useState('');
+  const [relationType, setRelationType] = useState(''); 
+  const [customLabel, setCustomLabel] = useState(''); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!source || !target) {
-      alert('人物を両方選択してください。');
+    if (!source || !target || !relationType) {
+      alert('人物と関係の種類をすべて選択してください。');
       return;
     }
-    onAddEdge(source, target, label);
+    
+    const finalRelationType = relationType === 'other' ? customLabel : relationType;
+    if (relationType === 'other' && !customLabel) {
+      alert('その他の関係のラベルを入力してください。');
+      return;
+    }
+
+    onAddEdge(source, target, finalRelationType);
     setSource('');
     setTarget('');
-    setLabel('');
+    setRelationType('');
+    setCustomLabel('');
   };
 
   return (
@@ -70,15 +87,34 @@ export default function AddEdgeForm({ nodes, onAddEdge }: AddEdgeFormProps) {
           ))}
         </Select>
       </FormControl>
-      <TextField
-        label="関係 (例: 師匠, ライバル)"
-        variant="outlined"
-        size="small"
-        fullWidth
-        value={label}
-        onChange={(e) => setLabel(e.target.value)}
-        sx={{ mb: 2 }}
-      />
+      <FormControl fullWidth sx={{ mb: 2 }} size="small">
+        <InputLabel id="relation-type-select-label">関係の種類</InputLabel>
+        <Select
+          labelId="relation-type-select-label"
+          value={relationType}
+          label="関係の種類"
+          onChange={(e) => setRelationType(e.target.value)}
+          required
+        >
+          {RELATION_TYPES.map((type) => (
+            <MenuItem key={type.value} value={type.value}>
+              {type.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      {relationType === 'other' && (
+        <TextField
+          label="その他の関係ラベル"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={customLabel}
+          onChange={(e) => setCustomLabel(e.target.value)}
+          sx={{ mb: 2 }}
+          required
+        />
+      )}
       <Button type="submit" variant="contained" fullWidth>
         追加
       </Button>

@@ -22,6 +22,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { useTheme } from '@mui/material/styles';
 
 import initialNodes from '@/data/nodes.json';
 import initialEdges from '@/data/edges.json';
@@ -31,17 +32,20 @@ import NodeDetail from './NodeDetail';
 import AddEdgeForm from './AddEdgeForm';
 import DownloadButton from './DownloadButton';
 import UploadButton from './UploadButton';
+import CustomEdge from './CustomEdge';
 
 const defaultEdgeOptions = {
-  markerEnd: { type: MarkerType.ArrowClosed },
+  // Default options are now handled by CustomEdge
 };
 
 function FlowChart() {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const theme = useTheme();
 
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
+  const edgeTypes = useMemo(() => ({ custom: CustomEdge }), []);
 
   const onNodesChange: OnNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -76,13 +80,14 @@ function FlowChart() {
     setNodes((nds) => nds.concat(newNode));
   }, [setNodes]);
 
-  const addNewEdge = useCallback((source: string, target: string, label: string) => {
+  const addNewEdge = useCallback((source: string, target: string, relationType: string) => {
     const newEdge = {
       id: `edge-${source}-${target}-${Date.now()}`,
       source,
       target,
-      label,
-      markerEnd: { type: MarkerType.ArrowClosed },
+      label: relationType,
+      type: 'custom',
+      data: { relationType },
     };
     setEdges((eds) => addEdge(newEdge, eds));
   }, [setEdges]);
@@ -98,6 +103,7 @@ function FlowChart() {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
@@ -105,6 +111,7 @@ function FlowChart() {
           fitView
           defaultEdgeOptions={defaultEdgeOptions}
         >
+          {/* Removed custom markers */}
           <Controls />
           <Background variant={BackgroundVariant.Lines} gap={24} color="#ccc" />
         </ReactFlow>
