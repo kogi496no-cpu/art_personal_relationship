@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from 'react';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 interface AddNodeFormProps {
   onAddNode: (label: string, era: string) => void;
@@ -22,29 +26,32 @@ export default function AddNodeForm({ onAddNode }: AddNodeFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginTop: '16px' }}>
-      <h4>新しい人物を追加</h4>
-      <div style={{ marginBottom: '8px' }}>
-        <label htmlFor="label" style={{ display: 'block', marginBottom: '4px' }}>人物名:</label>
-        <input
-          type="text"
-          id="label"
-          value={label}
-          onChange={(e) => setLabel(e.target.value)}
-          style={{ width: '100%', padding: '4px' }}
-        />
-      </div>
-      <div style={{ marginBottom: '8px' }}>
-        <label htmlFor="era" style={{ display: 'block', marginBottom: '4px' }}>時代:</label>
-        <input
-          type="text"
-          id="era"
-          value={era}
-          onChange={(e) => setEra(e.target.value)}
-          style={{ width: '100%', padding: '4px' }}
-        />
-      </div>
-      <button type="submit" style={{ width: '100%', padding: '8px' }}>追加</button>
-    </form>
+    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        新しい人物を追加
+      </Typography>
+      <TextField
+        label="人物名"
+        variant="outlined"
+        size="small"
+        fullWidth
+        value={label}
+        onChange={(e) => setLabel(e.target.value)}
+        sx={{ mb: 2 }}
+        required
+      />
+      <TextField
+        label="時代"
+        variant="outlined"
+        size="small"
+        fullWidth
+        value={era}
+        onChange={(e) => setEra(e.target.value)}
+        sx={{ mb: 2 }}
+      />
+      <Button type="submit" variant="contained" fullWidth>
+        追加
+      </Button>
+    </Box>
   );
 }
