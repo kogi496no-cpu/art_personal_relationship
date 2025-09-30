@@ -64,6 +64,19 @@ function FlowChart() {
     setSelectedNode(node);
   }, []);
 
+  const handleSaveNode = useCallback((updatedData: any) => {
+    setNodes((nds) =>
+      nds.map((node) =>
+        node.id === selectedNode?.id
+          ? { ...node, data: { ...node.data, ...updatedData } }
+          : node
+      )
+    );
+    setSelectedNode((prev) =>
+      prev ? { ...prev, data: { ...prev.data, ...updatedData } } : null
+    );
+  }, [selectedNode, setNodes]);
+
   const addNode = useCallback((data: { label: string; era: string; description: string; masterpieces: string }) => {
     const { label, era, description, masterpieces } = data;
     const newNode: Node = {
@@ -134,7 +147,7 @@ function FlowChart() {
             操作パネル
           </Typography>
           <Divider sx={{ my: 2 }} />
-          <NodeDetail node={selectedNode} />
+          <NodeDetail node={selectedNode} onSave={handleSaveNode} />
           <Divider sx={{ my: 2 }} />
           <AddNodeForm onAddNode={addNode} />
           <Divider sx={{ my: 2 }} />
