@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -39,10 +39,34 @@ const defaultEdgeOptions = {
 };
 
 function FlowChart() {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
+  const [nodes, setNodes] = useState<Node[]>(() => {
+    if (typeof window !== 'undefined') {
+      const savedNodes = localStorage.getItem('flow-nodes');
+      return savedNodes ? JSON.parse(savedNodes) : initialNodes;
+    }
+    return initialNodes;
+  });
+  const [edges, setEdges] = useState<Edge[]>(() => {
+    if (typeof window !== 'undefined') {
+      const savedEdges = localStorage.getItem('flow-edges');
+      return savedEdges ? JSON.parse(savedEdges) : initialEdges;
+    }
+    return initialEdges;
+  });
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const theme = useTheme();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('flow-nodes', JSON.stringify(nodes));
+    }
+  }, [nodes]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('flow-edges', JSON.stringify(edges));
+    }
+  }, [edges]);
 
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
   const edgeTypes = useMemo(() => ({ custom: CustomEdge }), []);
