@@ -14,6 +14,7 @@ import ReactFlow, {
   OnConnect,
   MarkerType,
   BackgroundVariant,
+  SelectionChanges,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
@@ -23,6 +24,8 @@ import Divider from '@mui/material/Divider';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 import initialNodes from '@/data/nodes.json';
 import initialEdges from '@/data/edges.json';
@@ -54,6 +57,8 @@ function FlowChart() {
     return initialEdges;
   });
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [selectedNodes, setSelectedNodes] = useState<string[]>([]);
+  const [selectedEdges, setSelectedEdges] = useState<string[]>([]);
   const theme = useTheme();
 
   useEffect(() => {
@@ -83,6 +88,11 @@ function FlowChart() {
     (connection) => setEdges((eds) => addEdge(connection, eds)),
     [setEdges]
   );
+
+  const onSelectionChange = useCallback((changes: SelectionChanges) => {
+    setSelectedNodes(changes.nodes.map(n => n.id));
+    setSelectedEdges(changes.edges.map(e => e.id));
+  }, []);
 
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
     setSelectedNode(node);
@@ -129,6 +139,22 @@ function FlowChart() {
     setEdges((eds) => addEdge(newEdge, eds));
   }, [setEdges]);
 
+  const deleteSelectedElements = useCallback(() => {
+    setNodes((nds) => nds.filter((n) => !selectedNodes.includes(n.id)));
+    setEdges((eds) => eds.filter((e) => !selectedEdges.includes(e.id)));
+    setSelectedNodes([]);
+    setSelectedEdges([]);
+    setSelectedNode(null); 
+  }, [selectedNodes, selectedEdges, setNodes, setEdges]);
+
+  const clearAll = useCallback(() => {
+    if (window.confirm('すべてのノードとエッジを削除しますか？')) {
+      setNodes([]);
+      setEdges([]);
+      setSelectedNode(null);
+    }
+  }, [setNodes, setEdges]);
+
   return (
     <Box sx={{ display: 'flex', height: '100vh', width: '100%' }}>
       <Box sx={{ 
@@ -145,8 +171,10 @@ function FlowChart() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onNodeClick={onNodeClick}
+          onSelectionChange={onSelectionChange}
           fitView
           defaultEdgeOptions={defaultEdgeOptions}
+          deleteKeyCode={['Backspace', 'Delete']}
         >
           {/* Removed custom markers */}
           <Controls />
@@ -182,6 +210,26 @@ function FlowChart() {
           <Divider sx={{ my: 2 }} />
           <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>データ保存</Typography>
           <DownloadButton nodes={nodes} edges={edges} />
+          <Divider sx={{ my: 2 }} />
+          <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>編集</Typography>
+          <Stack spacing={1}>
+            <Button 
+              variant="outlined" 
+              color="error" 
+              onClick={deleteSelectedElements}
+              disabled={selectedNodes.length === 0 && selectedEdges.length === 0}
+            >
+              選択項目を削除
+            </Button>
+            <Button 
+              variant="contained" 
+              color="error" 
+              onClick={clearAll}
+              disabled={nodes.length === 0 && edges.length === 0}
+            >
+              すべてクリア
+            </Button>
+          </Stack>
         </CardContent>
       </Card>
     </Box>
