@@ -57,6 +57,18 @@ export default function CustomEdge({
         finalMarkerStart = undefined;
         strokeWidth = 2;
         break;
+      case 'friend':
+        strokeColor = theme.palette.primary.main; // Purple or another distinct color
+        finalMarkerEnd = { type: MarkerType.ArrowClosed, color: strokeColor };
+        finalMarkerStart = { type: MarkerType.ArrowClosed, color: strokeColor }; // Bidirectional
+        strokeWidth = 2;
+        break;
+      case 'influence':
+        strokeColor = theme.palette.secondary.main; // A different color
+        finalMarkerEnd = { type: MarkerType.ArrowClosed, color: strokeColor };
+        finalMarkerStart = undefined;
+        strokeWidth = 2;
+        break;
       default:
         // For 'other' or custom labels, use default color but ensure marker is set
         strokeColor = theme.palette.text.secondary;

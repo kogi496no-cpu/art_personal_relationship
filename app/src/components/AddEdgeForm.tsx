@@ -16,6 +16,8 @@ export const RELATION_TYPES = [
   { value: 'master_apprentice', label: '師匠と弟子' },
   { value: 'inheritance', label: '継承' },
   { value: 'patron', label: 'パトロン' },
+  { value: 'friend', label: '友人' },
+  { value: 'influence', label: '影響を与える' },
   { value: 'other', label: 'その他' }, // Fallback for custom labels
 ];
 
