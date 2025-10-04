@@ -76,6 +76,22 @@ function FlowChart() {
   const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
   const edgeTypes = useMemo(() => ({ custom: CustomEdge }), []);
 
+  const updatedNodes = useMemo(() => {
+    const edgeCounts = edges.reduce((acc, edge) => {
+      acc[edge.source] = (acc[edge.source] || 0) + 1;
+      acc[edge.target] = (acc[edge.target] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return nodes.map(node => ({
+      ...node,
+      data: {
+        ...node.data,
+        edgeCount: edgeCounts[node.id] || 0,
+      },
+    }));
+  }, [nodes, edges]);
+
   const onNodesChange: OnNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
     [setNodes]
@@ -163,7 +179,7 @@ function FlowChart() {
         bgcolor: 'background.default'
       }}>
         <ReactFlow
-          nodes={nodes}
+          nodes={updatedNodes}
           edges={edges}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
