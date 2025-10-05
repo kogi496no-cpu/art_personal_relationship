@@ -31,6 +31,7 @@ import initialNodes from '@/data/nodes.json';
 import initialEdges from '@/data/edges.json';
 import AddNodeForm from './AddNodeForm';
 import CustomNode from './CustomNode';
+import GroupNode from './GroupNode';
 import NodeDetail from './NodeDetail';
 import AddEdgeForm from './AddEdgeForm';
 import DownloadButton from './DownloadButton';
@@ -73,7 +74,7 @@ function FlowChart() {
     }
   }, [edges]);
 
-  const nodeTypes = useMemo(() => ({ custom: CustomNode }), []);
+  const nodeTypes = useMemo(() => ({ custom: CustomNode, group: GroupNode }), []);
   const edgeTypes = useMemo(() => ({ custom: CustomEdge }), []);
 
   const updatedNodes = useMemo(() => {
@@ -163,6 +164,66 @@ function FlowChart() {
     setSelectedNode(null); 
   }, [selectedNodes, selectedEdges, setNodes, setEdges]);
 
+  const groupSelectedNodes = useCallback(() => {
+    const selectedNodeObjects = nodes.filter(n => selectedNodes.includes(n.id) && !n.parentNode);
+    if (selectedNodeObjects.length < 2) return;
+
+    // 1. Calculate bounding box of selected nodes
+    const padding = 40;
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+    selectedNodeObjects.forEach(node => {
+      // Fallback for width/height, though React Flow should provide them
+      const nodeWidth = node.width || 150;
+      const nodeHeight = node.height || 50;
+
+      minX = Math.min(minX, node.position.x);
+      minY = Math.min(minY, node.position.y);
+      maxX = Math.max(maxX, node.position.x + nodeWidth);
+      maxY = Math.max(maxY, node.position.y + nodeHeight);
+    });
+
+    const groupNodePosition = { x: minX - padding, y: minY - padding };
+    const groupNodeWidth = maxX - minX + padding * 2;
+    const groupNodeHeight = maxY - minY + padding * 2;
+
+    // 2. Create the new group node
+    const groupNodeId = `group-${Date.now()}`;
+    const groupNode: Node = {
+      id: groupNodeId,
+      type: 'group',
+      position: groupNodePosition,
+      data: { label: '新しいグループ' },
+      style: {
+        width: groupNodeWidth,
+        height: groupNodeHeight,
+        zIndex: -1,
+      },
+    };
+
+    // 3. Update nodes: add the group and update children
+    setNodes(nds => {
+      const otherNodes = nds.filter(n => !selectedNodes.includes(n.id));
+      const updatedChildNodes = nds.filter(n => selectedNodes.includes(n.id)).map(node => {
+        return {
+          ...node,
+          parentNode: groupNodeId,
+          extent: 'parent' as const,
+          position: {
+            x: node.position.x - groupNodePosition.x,
+            y: node.position.y - groupNodePosition.y,
+          },
+        };
+      });
+      return [...otherNodes, ...updatedChildNodes, groupNode];
+    });
+
+    // 4. Clear selection
+    setSelectedNodes([]);
+    setSelectedEdges([]);
+    setSelectedNode(null);
+  }, [nodes, selectedNodes, setNodes]);
+
   const clearAll = useCallback(() => {
     if (window.confirm('すべてのノードとエッジを削除しますか？')) {
       setNodes([]);
@@ -229,6 +290,13 @@ function FlowChart() {
           <Divider sx={{ my: 2 }} />
           <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>編集</Typography>
           <Stack spacing={1}>
+            <Button 
+              variant="outlined" 
+              onClick={groupSelectedNodes}
+              disabled={selectedNodes.length < 2}
+            >
+              選択項目をグループ化
+            </Button>
             <Button 
               variant="outlined" 
               color="error" 
