@@ -111,6 +111,36 @@ function FlowChart() {
     setSelectedEdges(changes.edges.map(e => e.id));
   }, []);
 
+  const onNodeDragStop = useCallback((_: React.MouseEvent, node: Node) => {
+    if (!node.parentNode) {
+      const targetGroup = nodes.find(n => 
+        n.type === 'group' &&
+        node.id !== n.id &&
+        node.position.x >= n.position.x &&
+        node.position.y >= n.position.y &&
+        node.position.x + (node.width ?? 0) <= n.position.x + (n.width ?? 0) &&
+        node.position.y + (node.height ?? 0) <= n.position.y + (n.height ?? 0)
+      );
+
+      if (targetGroup) {
+        setNodes(nds => nds.map(n => {
+          if (n.id === node.id) {
+            return {
+              ...n,
+              parentNode: targetGroup.id,
+              extent: 'parent' as const,
+              position: {
+                x: n.position.x - targetGroup.position.x,
+                y: n.position.y - targetGroup.position.y,
+              },
+            };
+          }
+          return n;
+        }));
+      }
+    }
+  }, [nodes, setNodes]);
+
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
     setSelectedNode(node);
   }, []);
@@ -271,6 +301,7 @@ function FlowChart() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onNodeClick={onNodeClick}
+          onNodeDragStop={onNodeDragStop}
           onSelectionChange={onSelectionChange}
           fitView
           defaultEdgeOptions={defaultEdgeOptions}
