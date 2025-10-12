@@ -57,6 +57,15 @@ export default function NodeDetail({ node, nodes, onSave, onRemoveFromGroup }: N
               onChange={handleChange}
               fullWidth
             />
+            <TextField
+              label="グループの説明"
+              name="description"
+              value={formData?.description || ''}
+              onChange={handleChange}
+              multiline
+              rows={4}
+              fullWidth
+            />
             <Stack direction="row" spacing={1} justifyContent="flex-end">
               <Button onClick={() => setIsEditing(false)} size="small">キャンセル</Button>
               <Button onClick={handleSave} variant="contained" size="small">保存</Button>
@@ -144,6 +153,16 @@ export default function NodeDetail({ node, nodes, onSave, onRemoveFromGroup }: N
             <Typography variant="body2" color="text.secondary" sx={{mt: 1}}>
                 メンバーがいません。
             </Typography>
+        )}
+        {node.data.description && (
+          <Box sx={{mt: 2}}>
+            <Typography variant="subtitle2" color="text.secondary">
+              グループの説明
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}>
+              {node.data.description}
+            </Typography>
+          </Box>
         )}
       </Box>
     );

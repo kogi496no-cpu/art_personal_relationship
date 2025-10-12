@@ -14,7 +14,7 @@ import ReactFlow, {
   OnConnect,
   MarkerType,
   BackgroundVariant,
-  SelectionChanges,
+  OnSelectionChangeParams,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
@@ -106,9 +106,9 @@ function FlowChart() {
     [setEdges]
   );
 
-  const onSelectionChange = useCallback((changes: SelectionChanges) => {
-    setSelectedNodes(changes.nodes.map(n => n.id));
-    setSelectedEdges(changes.edges.map(e => e.id));
+  const onSelectionChange = useCallback(({ nodes, edges }: OnSelectionChangeParams) => {
+    setSelectedNodes(nodes.map(n => n.id));
+    setSelectedEdges(edges.map(e => e.id));
   }, []);
 
   const onNodeDragStop = useCallback((_: React.MouseEvent, node: Node) => {
@@ -246,7 +246,7 @@ function FlowChart() {
       id: groupNodeId,
       type: 'group',
       position: groupNodePosition,
-      data: { label: '新しいグループ' },
+      data: { label: '新しいグループ', description: '' },
       style: {
         width: groupNodeWidth,
         height: groupNodeHeight,
