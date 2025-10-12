@@ -1,15 +1,16 @@
-'use client';
-
 import { useState, useEffect } from 'react';
 import { Node } from 'reactflow';
-import { Box, Typography, Chip, Button, TextField, Stack } from '@mui/material';
+import { Box, Typography, Chip, Button, TextField, Stack, List, ListItem, ListItemText, IconButton, Divider } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface NodeDetailProps {
   node: Node | null;
+  nodes: Node[];
   onSave: (data: any) => void;
+  onRemoveFromGroup: (nodeId: string) => void;
 }
 
-export default function NodeDetail({ node, onSave }: NodeDetailProps) {
+export default function NodeDetail({ node, nodes, onSave, onRemoveFromGroup }: NodeDetailProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(node?.data);
 
@@ -54,6 +55,15 @@ export default function NodeDetail({ node, onSave }: NodeDetailProps) {
               name="label"
               value={formData?.label || ''}
               onChange={handleChange}
+              fullWidth
+            />
+            <TextField
+              label="グループの説明"
+              name="description"
+              value={formData?.description || ''}
+              onChange={handleChange}
+              multiline
+              rows={4}
               fullWidth
             />
             <Stack direction="row" spacing={1} justifyContent="flex-end">
@@ -113,6 +123,8 @@ export default function NodeDetail({ node, onSave }: NodeDetailProps) {
 
   // Group Node Display UI
   if (node.type === 'group') {
+    const childNodes = nodes.filter(n => n.parentNode === node.id);
+
     return (
       <Box sx={{ mt: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -120,8 +132,38 @@ export default function NodeDetail({ node, onSave }: NodeDetailProps) {
           <Button onClick={() => setIsEditing(true)} size="small">編集</Button>
         </Box>
         <Typography variant="subtitle2" color="text.secondary">
-          これはグループです。
+          グループメンバー
         </Typography>
+        <List dense>
+          {childNodes.map(child => (
+            <ListItem
+              key={child.id}
+              secondaryAction={
+                <IconButton edge="end" aria-label="delete" onClick={() => onRemoveFromGroup(child.id)} size="small">
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              }
+              sx={{ pl: 0 }}
+            >
+              <ListItemText primary={child.data.label} />
+            </ListItem>
+          ))}
+        </List>
+        {childNodes.length === 0 && (
+            <Typography variant="body2" color="text.secondary" sx={{mt: 1}}>
+                メンバーがいません。
+            </Typography>
+        )}
+        {node.data.description && (
+          <Box sx={{mt: 2}}>
+            <Typography variant="subtitle2" color="text.secondary">
+              グループの説明
+            </Typography>
+            <Typography variant="body2" sx={{ mt: 0.5, whiteSpace: 'pre-wrap' }}>
+              {node.data.description}
+            </Typography>
+          </Box>
+        )}
       </Box>
     );
   }

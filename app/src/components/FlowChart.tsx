@@ -14,7 +14,7 @@ import ReactFlow, {
   OnConnect,
   MarkerType,
   BackgroundVariant,
-  SelectionChanges,
+  OnSelectionChangeParams,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
@@ -106,10 +106,40 @@ function FlowChart() {
     [setEdges]
   );
 
-  const onSelectionChange = useCallback((changes: SelectionChanges) => {
-    setSelectedNodes(changes.nodes.map(n => n.id));
-    setSelectedEdges(changes.edges.map(e => e.id));
+  const onSelectionChange = useCallback(({ nodes, edges }: OnSelectionChangeParams) => {
+    setSelectedNodes(nodes.map(n => n.id));
+    setSelectedEdges(edges.map(e => e.id));
   }, []);
+
+  const onNodeDragStop = useCallback((_: React.MouseEvent, node: Node) => {
+    if (!node.parentNode) {
+      const targetGroup = nodes.find(n => 
+        n.type === 'group' &&
+        node.id !== n.id &&
+        node.position.x >= n.position.x &&
+        node.position.y >= n.position.y &&
+        node.position.x + (node.width ?? 0) <= n.position.x + (n.width ?? 0) &&
+        node.position.y + (node.height ?? 0) <= n.position.y + (n.height ?? 0)
+      );
+
+      if (targetGroup) {
+        setNodes(nds => nds.map(n => {
+          if (n.id === node.id) {
+            return {
+              ...n,
+              parentNode: targetGroup.id,
+              extent: 'parent' as const,
+              position: {
+                x: n.position.x - targetGroup.position.x,
+                y: n.position.y - targetGroup.position.y,
+              },
+            };
+          }
+          return n;
+        }));
+      }
+    }
+  }, [nodes, setNodes]);
 
   const onNodeClick = useCallback((_: React.MouseEvent, node: Node) => {
     setSelectedNode(node);
@@ -127,6 +157,29 @@ function FlowChart() {
       prev ? { ...prev, data: { ...prev.data, ...updatedData } } : null
     );
   }, [selectedNode, setNodes]);
+
+  const handleRemoveFromGroup = useCallback((nodeId: string) => {
+    setNodes(nds => {
+      const nodeToRemove = nds.find(n => n.id === nodeId);
+      const parentGroup = nodeToRemove ? nds.find(n => n.id === nodeToRemove.parentNode) : undefined;
+
+      if (!nodeToRemove || !parentGroup) return nds;
+
+      return nds.map(n => {
+        if (n.id === nodeId) {
+          const { parentNode, extent, ...rest } = n;
+          return {
+            ...rest,
+            position: {
+              x: n.position.x + parentGroup.position.x,
+              y: n.position.y + parentGroup.position.y,
+            },
+          };
+        }
+        return n;
+      });
+    });
+  }, [setNodes]);
 
   const addNode = useCallback((data: { label: string; era: string; description: string; masterpieces: string }) => {
     const { label, era, description, masterpieces } = data;
@@ -193,7 +246,7 @@ function FlowChart() {
       id: groupNodeId,
       type: 'group',
       position: groupNodePosition,
-      data: { label: '新しいグループ' },
+      data: { label: '新しいグループ', description: '' },
       style: {
         width: groupNodeWidth,
         height: groupNodeHeight,
@@ -248,6 +301,7 @@ function FlowChart() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onNodeClick={onNodeClick}
+          onNodeDragStop={onNodeDragStop}
           onSelectionChange={onSelectionChange}
           fitView
           defaultEdgeOptions={defaultEdgeOptions}
@@ -276,7 +330,7 @@ function FlowChart() {
             操作パネル
           </Typography>
           <Divider sx={{ my: 2 }} />
-          <NodeDetail node={selectedNode} onSave={handleSaveNode} />
+          <NodeDetail node={selectedNode} nodes={nodes} onSave={handleSaveNode} onRemoveFromGroup={handleRemoveFromGroup} />
           <Divider sx={{ my: 2 }} />
           <AddNodeForm onAddNode={addNode} />
           <Divider sx={{ my: 2 }} />
