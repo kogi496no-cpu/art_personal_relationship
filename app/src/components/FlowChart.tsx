@@ -128,6 +128,29 @@ function FlowChart() {
     );
   }, [selectedNode, setNodes]);
 
+  const handleRemoveFromGroup = useCallback((nodeId: string) => {
+    setNodes(nds => {
+      const nodeToRemove = nds.find(n => n.id === nodeId);
+      const parentGroup = nodeToRemove ? nds.find(n => n.id === nodeToRemove.parentNode) : undefined;
+
+      if (!nodeToRemove || !parentGroup) return nds;
+
+      return nds.map(n => {
+        if (n.id === nodeId) {
+          const { parentNode, extent, ...rest } = n;
+          return {
+            ...rest,
+            position: {
+              x: n.position.x + parentGroup.position.x,
+              y: n.position.y + parentGroup.position.y,
+            },
+          };
+        }
+        return n;
+      });
+    });
+  }, [setNodes]);
+
   const addNode = useCallback((data: { label: string; era: string; description: string; masterpieces: string }) => {
     const { label, era, description, masterpieces } = data;
     const newNode: Node = {
@@ -276,7 +299,7 @@ function FlowChart() {
             操作パネル
           </Typography>
           <Divider sx={{ my: 2 }} />
-          <NodeDetail node={selectedNode} onSave={handleSaveNode} />
+          <NodeDetail node={selectedNode} nodes={nodes} onSave={handleSaveNode} onRemoveFromGroup={handleRemoveFromGroup} />
           <Divider sx={{ my: 2 }} />
           <AddNodeForm onAddNode={addNode} />
           <Divider sx={{ my: 2 }} />
