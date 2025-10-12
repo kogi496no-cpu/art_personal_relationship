@@ -42,7 +42,30 @@ export default function NodeDetail({ node, onSave }: NodeDetailProps) {
     setFormData((prev: any) => ({ ...prev, masterpieces: value.split(',').map(s => s.trim()) }));
   };
 
+  // Editing mode
   if (isEditing) {
+    // Group Node Editing UI
+    if (node.type === 'group') {
+      return (
+        <Box sx={{ mt: 2 }}>
+          <Stack spacing={2}>
+            <TextField
+              label="グループ名"
+              name="label"
+              value={formData?.label || ''}
+              onChange={handleChange}
+              fullWidth
+            />
+            <Stack direction="row" spacing={1} justifyContent="flex-end">
+              <Button onClick={() => setIsEditing(false)} size="small">キャンセル</Button>
+              <Button onClick={handleSave} variant="contained" size="small">保存</Button>
+            </Stack>
+          </Stack>
+        </Box>
+      );
+    }
+
+    // Default Node Editing UI
     return (
       <Box sx={{ mt: 2 }}>
         <Stack spacing={2}>
@@ -85,8 +108,25 @@ export default function NodeDetail({ node, onSave }: NodeDetailProps) {
     );
   }
 
+  // Display mode
   const { label, era, description, masterpieces } = node.data;
 
+  // Group Node Display UI
+  if (node.type === 'group') {
+    return (
+      <Box sx={{ mt: 2 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="h6" component="h3" gutterBottom>{label}</Typography>
+          <Button onClick={() => setIsEditing(true)} size="small">編集</Button>
+        </Box>
+        <Typography variant="subtitle2" color="text.secondary">
+          これはグループです。
+        </Typography>
+      </Box>
+    );
+  }
+
+  // Default Node Display UI
   return (
     <Box sx={{ mt: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
