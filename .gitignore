@@ -1,3 +1,4 @@
 .gemini/
 gha-creds-*.json
 .github/workflows/gemini.md
+.github/
