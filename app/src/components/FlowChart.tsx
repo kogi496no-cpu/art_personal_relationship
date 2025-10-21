@@ -1,5 +1,3 @@
-"use client";
-
 import { useMemo } from 'react';
 import ReactFlow, {
   Controls,
@@ -24,12 +22,16 @@ import GroupNode from './GroupNode';
 import NodeDetail from './NodeDetail';
 import AddEdgeForm from './AddEdgeForm';
 import DownloadButton from './DownloadButton';
-import UploadButton from './UploadButton';
+import UploadButton from './UploadButton'; // パスを修正
 import CustomEdge from './CustomEdge';
 
 const defaultEdgeOptions = {
   // Default options are now handled by CustomEdge
 };
+
+// nodeTypesとedgeTypesをコンポーネントの外で定義
+const nodeTypes = { custom: CustomNode, group: GroupNode };
+const edgeTypes = { custom: CustomEdge };
 
 function FlowChart() {
   const {
@@ -44,7 +46,7 @@ function FlowChart() {
     onEdgesChange,
     onConnect,
     onSelectionChange,
-    onNodeClick,
+    onNodeClick, // useFlowからのonNodeClickを再度取得
     onNodeDragStop,
     handleSaveNode,
     handleRemoveFromGroup,
@@ -53,11 +55,18 @@ function FlowChart() {
     deleteSelectedElements,
     groupSelectedNodes,
     clearAll,
-    updatedNodes,
   } = useFlow();
 
-  const nodeTypes = useMemo(() => ({ custom: CustomNode, group: GroupNode }), []);
-  const edgeTypes = useMemo(() => ({ custom: CustomEdge }), []);
+  // nodesのz-indexを調整
+  const adjustedNodes = nodes.map(node => {
+    if (node.type === 'custom') {
+      return { ...node, zIndex: 100 }; // CustomNodeのz-indexを高くする
+    }
+    if (node.type === 'group') {
+      return { ...node, zIndex: 10 }; // GroupNodeのz-indexを低くする
+    }
+    return node;
+  });
 
   return (
     <Box sx={{ display: 'flex', height: '100vh', width: '100%' }}>
@@ -67,14 +76,14 @@ function FlowChart() {
         bgcolor: 'background.default'
       }}>
         <ReactFlow
-          nodes={updatedNodes}
+          nodes={adjustedNodes} // 調整済みのノードを渡す
           edges={edges}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
-          onNodeClick={onNodeClick}
+          onNodeClick={onNodeClick} // 元のonNodeClickに戻す
           onNodeDragStop={onNodeDragStop}
           onSelectionChange={onSelectionChange}
           fitView

@@ -203,24 +203,26 @@ export function useFlow() {
       style: {
         width: groupNodeWidth,
         height: groupNodeHeight,
-        zIndex: -1,
       },
+      connectable: true, // グループノードを接続可能にする
     };
 
     setNodes(nds => {
-      const otherNodes = nds.filter(n => !selectedNodes.includes(n.id));
-      const updatedChildNodes = nds.filter(n => selectedNodes.includes(n.id)).map(node => {
-        return {
-          ...node,
-          parentNode: groupNodeId,
-          extent: 'parent' as const,
-          position: {
-            x: node.position.x - groupNodePosition.x,
-            y: node.position.y - groupNodePosition.y,
-          },
-        };
+      const updatedNodes = nds.map(n => {
+        if (selectedNodes.includes(n.id)) {
+          return {
+            ...n,
+            parentNode: groupNodeId,
+            extent: 'parent' as const,
+            position: {
+              x: n.position.x - groupNodePosition.x,
+              y: n.position.y - groupNodePosition.y,
+            },
+          };
+        }
+        return n;
       });
-      return [...otherNodes, ...updatedChildNodes, groupNode];
+      return [...updatedNodes, groupNode];
     });
 
     setSelectedNodes([]);
@@ -236,21 +238,7 @@ export function useFlow() {
     }
   }, [setNodes, setEdges]);
 
-  const updatedNodes = useMemo(() => {
-    const edgeCounts = edges.reduce((acc, edge) => {
-      acc[edge.source] = (acc[edge.source] || 0) + 1;
-      acc[edge.target] = (acc[edge.target] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
 
-    return nodes.map(node => ({
-      ...node,
-      data: {
-        ...node.data,
-        edgeCount: edgeCounts[node.id] || 0,
-      },
-    }));
-  }, [nodes, edges]);
 
   return {
     nodes,
@@ -273,6 +261,5 @@ export function useFlow() {
     deleteSelectedElements,
     groupSelectedNodes,
     clearAll,
-    updatedNodes,
   };
 }

@@ -1,1 +1,670 @@
-[]
+[
+  {
+    "id": "node-1760260150147",
+    "type": "custom",
+    "position": {
+      "x": 81.91244041069112,
+      "y": -157.40134431158287
+    },
+    "data": {
+      "label": "平賀源内",
+      "era": "江戸時代",
+      "description": "エレキテル",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 81.91244041069112,
+      "y": -157.40134431158287
+    },
+    "dragging": false
+  },
+  {
+    "id": "node-1760260184613",
+    "type": "custom",
+    "position": {
+      "x": -30.238413538224115,
+      "y": -31.32837550652012
+    },
+    "data": {
+      "label": "小田野直武",
+      "era": "江戸時代",
+      "description": "解体新書の解剖図を描いた",
+      "masterpieces": [
+        "解体新書（解剖図）"
+      ]
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": -30.238413538224115,
+      "y": -31.32837550652012
+    },
+    "dragging": false
+  },
+  {
+    "id": "node-1760260245249",
+    "type": "custom",
+    "position": {
+      "x": 186.11762707745652,
+      "y": -19.72166994617419
+    },
+    "data": {
+      "label": "司馬江漢",
+      "era": "江戸時代",
+      "description": "オランダ語を学びながら西洋画を研究し、銅板画や油絵を描いた",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 186.11762707745652,
+      "y": -19.72166994617419
+    },
+    "dragging": false
+  },
+  {
+    "id": "node-1760260330122",
+    "type": "custom",
+    "position": {
+      "x": 170.63945509194696,
+      "y": 41.78662733759859
+    },
+    "data": {
+      "label": "フォンタネージ",
+      "era": "明治時代",
+      "description": "工部美術学校設立時、絵の講師として呼ばれたイタリアの画家\n",
+      "masterpieces": [],
+      "edgeCount": 0
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 177.40353712626973,
+      "y": 150.91967851439222
+    },
+    "dragging": false,
+    "parentNode": "group-1760260624980",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260393491",
+    "type": "custom",
+    "position": {
+      "x": 0,
+      "y": 259.55662059297606
+    },
+    "data": {
+      "label": "浅井忠",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": [
+        "春畝"
+      ]
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": -158.6663616850102,
+      "y": 356.0442503482116
+    },
+    "dragging": false,
+    "parentNode": "group-1760260624980",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260437558",
+    "type": "custom",
+    "position": {
+      "x": 369.8538282473776,
+      "y": 63.99999999999997
+    },
+    "data": {
+      "label": "ラグーザ",
+      "era": "明治時代",
+      "description": "工部美術学校の彫刻講師",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 211.18746656236738,
+      "y": 160.48762975523556
+    },
+    "dragging": false,
+    "parentNode": "group-1760260624980",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260475954",
+    "type": "custom",
+    "position": {
+      "x": 574.6046181971233,
+      "y": 90.04950678056855
+    },
+    "data": {
+      "label": "カペレッティ",
+      "era": "明治時代",
+      "description": "工部美術学校の建築講師",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 415.93825651211307,
+      "y": 186.53713653580414
+    },
+    "dragging": false,
+    "parentNode": "group-1760260624980",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260492516",
+    "type": "custom",
+    "position": {
+      "x": 182.25722224432815,
+      "y": 260.44537613082355
+    },
+    "data": {
+      "label": "小山正太郎",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 23.59086055931796,
+      "y": 356.9330058860591
+    },
+    "dragging": false,
+    "parentNode": "group-1760260624980",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260509989",
+    "type": "custom",
+    "position": {
+      "x": 343.2328440822381,
+      "y": 274.48692595539876
+    },
+    "data": {
+      "label": "松岡寿",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 184.5664823972279,
+      "y": 370.9745557106343
+    },
+    "dragging": false,
+    "parentNode": "group-1760260624980",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260552754",
+    "type": "custom",
+    "position": {
+      "x": 578.325462250419,
+      "y": 245.24528093601614
+    },
+    "data": {
+      "label": "山本芳翠",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 419.65910056540883,
+      "y": 341.73291069125173
+    },
+    "dragging": false,
+    "parentNode": "group-1760260624980",
+    "extent": "parent"
+  },
+  {
+    "id": "group-1760260624980",
+    "type": "group",
+    "position": {
+      "x": -290.6663616850102,
+      "y": 102.48762975523562
+    },
+    "data": {
+      "label": "工部美術学校",
+      "edgeCount": 0,
+      "description": "明治政府が技術者の育成のために設立した学校。イタリアから講師を招いた"
+    },
+    "style": {
+      "width": 818,
+      "height": 374,
+      "zIndex": -1
+    },
+    "width": 818,
+    "height": 374,
+    "selected": false,
+    "positionAbsolute": {
+      "x": -290.6663616850102,
+      "y": 102.48762975523562
+    },
+    "dragging": false,
+    "resizing": false
+  },
+  {
+    "id": "node-1760260971589",
+    "type": "custom",
+    "position": {
+      "x": 244.6271427858768,
+      "y": 245.25165191916432
+    },
+    "data": {
+      "label": "菱田春草",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": [
+        "黒き猫"
+      ]
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 952.68318321037,
+      "y": 295.70492513569695
+    },
+    "dragging": false,
+    "parentNode": "group-1760261019880",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260926017",
+    "type": "custom",
+    "position": {
+      "x": 246.6768230356032,
+      "y": 69.72920193266975
+    },
+    "data": {
+      "label": "岡倉天心",
+      "era": "明治時代",
+      "description": "東京美術学校の設立に尽力",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 954.7328634600964,
+      "y": 120.1824751492024
+    },
+    "dragging": false,
+    "parentNode": "group-1760261019880",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260950176",
+    "type": "custom",
+    "position": {
+      "x": 40,
+      "y": 229.27937258588986
+    },
+    "data": {
+      "label": "横山大観",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": [
+        "無我",
+        "屈原"
+      ]
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 748.0560404244932,
+      "y": 279.7326458024225
+    },
+    "dragging": false,
+    "parentNode": "group-1760261019880",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760260985135",
+    "type": "custom",
+    "position": {
+      "x": 443.34626528287595,
+      "y": 258.4719944292677
+    },
+    "data": {
+      "label": "下村観山",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 1151.4023057073691,
+      "y": 308.9252676458003
+    },
+    "dragging": false,
+    "parentNode": "group-1760261019880",
+    "extent": "parent"
+  },
+  {
+    "id": "group-1760261019880",
+    "type": "group",
+    "position": {
+      "x": 708.0560404244932,
+      "y": 50.45327321653265
+    },
+    "data": {
+      "label": "東京美術学校",
+      "edgeCount": 0,
+      "description": "日本画のための学校として設立された。今の東京藝術大学である。"
+    },
+    "style": {
+      "width": 619.4726377142968,
+      "height": 346.27937258588986,
+      "zIndex": -1
+    },
+    "width": 619,
+    "height": 346,
+    "selected": false,
+    "dragging": false
+  },
+  {
+    "id": "node-1760261229347",
+    "type": "custom",
+    "position": {
+      "x": 632.9317637281383,
+      "y": 228.4331866616909
+    },
+    "data": {
+      "label": "藤島武二",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 1265.4647530219177,
+      "y": 671.9485950479633
+    },
+    "dragging": false,
+    "parentNode": "group-1760261286105",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760261133241",
+    "type": "custom",
+    "position": {
+      "x": 307.00656512230125,
+      "y": 85.80118367019895
+    },
+    "data": {
+      "label": "黒田清輝",
+      "era": "明治時代",
+      "description": "パリに留学し、自然の光の下で明るく開放的に人物や風景を描く「外光派」という考えを持つ",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 939.5395544160806,
+      "y": 529.3165920564713
+    },
+    "dragging": false,
+    "parentNode": "group-1760261286105",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760261166314",
+    "type": "custom",
+    "position": {
+      "x": 0,
+      "y": 200.47314920249164
+    },
+    "data": {
+      "label": "久米桂一郎",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 632.5329892937793,
+      "y": 643.988557588764
+    },
+    "dragging": false,
+    "parentNode": "group-1760261286105",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760261184295",
+    "type": "custom",
+    "position": {
+      "x": 147.5587834227665,
+      "y": 230.91044174828176
+    },
+    "data": {
+      "label": "和田英作",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 780.0917727165458,
+      "y": 674.4258501345541
+    },
+    "dragging": false,
+    "parentNode": "group-1760261286105",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760261204237",
+    "type": "custom",
+    "position": {
+      "x": 437.83934222993867,
+      "y": 247.98464847672074
+    },
+    "data": {
+      "label": "岡田三郎助",
+      "era": "明治時代",
+      "description": "",
+      "masterpieces": []
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 1070.372331523718,
+      "y": 691.5000568629931
+    },
+    "dragging": false,
+    "parentNode": "group-1760261286105",
+    "extent": "parent"
+  },
+  {
+    "id": "group-1760261286105",
+    "type": "group",
+    "position": {
+      "x": 664.5329892937793,
+      "y": 517.5154083862724
+    },
+    "data": {
+      "label": "白馬会",
+      "edgeCount": 0,
+      "description": "外光派で結成された集団"
+    },
+    "style": {
+      "width": 850,
+      "height": 536,
+      "zIndex": -1
+    },
+    "width": 850,
+    "height": 536,
+    "selected": true,
+    "positionAbsolute": {
+      "x": 664.5329892937793,
+      "y": 517.5154083862724
+    },
+    "dragging": false,
+    "resizing": false
+  },
+  {
+    "id": "node-1760261587021",
+    "type": "custom",
+    "position": {
+      "x": 265.8261673265861,
+      "y": 450.3271177683856
+    },
+    "data": {
+      "label": "青木繁",
+      "era": "明治時代",
+      "description": "黒田清輝の生徒の一人。西洋美術や藤島武二の影響を受ける",
+      "masterpieces": [
+        "海の幸",
+        "わだつみのいろこの宮"
+      ]
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 898.3591566203654,
+      "y": 893.842526154658
+    },
+    "dragging": false,
+    "parentNode": "group-1760261286105",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760261675123",
+    "type": "custom",
+    "position": {
+      "x": 225.9626848945679,
+      "y": 159.4440242660238
+    },
+    "data": {
+      "label": "萬鐵五郎",
+      "era": "大正時代",
+      "description": "",
+      "masterpieces": [
+        "裸体美人"
+      ]
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 160.77551725302627,
+      "y": 702.6348745311753
+    },
+    "dragging": false,
+    "parentNode": "group-1760261889565",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760261427698",
+    "type": "custom",
+    "position": {
+      "x": 127.93962319692955,
+      "y": 64.9615199054989
+    },
+    "data": {
+      "label": "高村光太郎",
+      "era": "大正時代",
+      "description": "「緑の太陽を描いても構わない」でおなじみ",
+      "masterpieces": [
+        "手"
+      ],
+      "edgeCount": 0
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": 38.75245555538791,
+      "y": 610.1523701706504
+    },
+    "dragging": false,
+    "parentNode": "group-1760261889565",
+    "extent": "parent"
+  },
+  {
+    "id": "node-1760261471266",
+    "type": "custom",
+    "position": {
+      "x": 18,
+      "y": 151.72414446064556
+    },
+    "data": {
+      "label": "岸田劉生",
+      "era": "大正時代",
+      "description": "",
+      "masterpieces": [
+        "麗子五歳之像"
+      ]
+    },
+    "width": 150,
+    "height": 77,
+    "selected": false,
+    "positionAbsolute": {
+      "x": -47.187167641541635,
+      "y": 694.9149947257971
+    },
+    "dragging": false,
+    "parentNode": "group-1760261889565",
+    "extent": "parent"
+  },
+  {
+    "id": "group-1760261889565",
+    "type": "group",
+    "position": {
+      "x": -65.18716764154163,
+      "y": 543.1908502651515
+    },
+    "data": {
+      "label": "フュウザン会",
+      "edgeCount": 0,
+      "description": "フランスのポスト印象派やフォービズムに影響を受けている"
+    },
+    "style": {
+      "width": 397.68555808181816,
+      "height": 243.76262455514666,
+      "zIndex": -1
+    },
+    "width": 398,
+    "height": 244,
+    "selected": false,
+    "dragging": false,
+    "positionAbsolute": {
+      "x": -65.18716764154163,
+      "y": 543.1908502651515
+    }
+  }
+]

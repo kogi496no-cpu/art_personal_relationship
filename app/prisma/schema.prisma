@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../db/dev.db"
+}
+
+// 時代
+model Era {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  nodes       Node[]
+  edges       Edge[]
+  
+  dataSet     DataSet @relation(fields: [dataSetId], references: [id])
+  dataSetId   Int
+}
+
+// 人物・グループ
+model Node {
+  id           String  @id
+  type         String
+  label        String
+  description  String?
+  masterpieces Json
+  position_x   Float
+  position_y   Float
+  width        Float?
+  height       Float?
+  era   Era? @relation(fields: [eraId], references: [id])
+  eraId Int?
+
+  parentNodeId String?
+  parentNode   Node?     @relation("NodeChildren", fields: [parentNodeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children     Node[]    @relation("NodeChildren")
+
+  sourceEdges Edge[] @relation("SourceEdges")
+  targetEdges Edge[] @relation("TargetEdges")
+}
+
+// 関係性
+model Edge {
+  id    String @id
+  label String?
+  type  String
+  data  Json?
+
+  era   Era? @relation(fields: [eraId], references: [id])
+  eraId Int?
+
+  sourceNodeId String
+  sourceNode   Node   @relation("SourceEdges", fields: [sourceNodeId], references: [id])
+
+  targetNodeId String
+  targetNode   Node   @relation("TargetEdges", fields: [targetNodeId], references: [id])
+}
+
+// データセット
+model DataSet {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  eras        Era[]
+}
