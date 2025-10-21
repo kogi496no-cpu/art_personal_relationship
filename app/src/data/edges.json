@@ -1,1 +1,152 @@
-[]
+[
+  {
+    "id": "edge-node-1760260150147-node-1760260184613-1760260196961",
+    "source": "node-1760260150147",
+    "target": "node-1760260184613",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260150147-node-1760260245249-1760260254919",
+    "source": "node-1760260150147",
+    "target": "node-1760260245249",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260330122-node-1760260393491-1760260566469",
+    "source": "node-1760260330122",
+    "target": "node-1760260393491",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260330122-node-1760260492516-1760260573024",
+    "source": "node-1760260330122",
+    "target": "node-1760260492516",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260330122-node-1760260509989-1760260580157",
+    "source": "node-1760260330122",
+    "target": "node-1760260509989",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260330122-node-1760260552754-1760260587236",
+    "source": "node-1760260330122",
+    "target": "node-1760260552754",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260926017-node-1760260950176-1760260998695",
+    "source": "node-1760260926017",
+    "target": "node-1760260950176",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260926017-node-1760260971589-1760261005809",
+    "source": "node-1760260926017",
+    "target": "node-1760260971589",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760260926017-node-1760260985135-1760261013491",
+    "source": "node-1760260926017",
+    "target": "node-1760260985135",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  },
+  {
+    "id": "edge-node-1760261133241-node-1760261166314-1760261247939",
+    "source": "node-1760261133241",
+    "target": "node-1760261166314",
+    "label": "friend",
+    "type": "custom",
+    "data": {
+      "relationType": "friend"
+    }
+  },
+  {
+    "id": "edge-node-1760261133241-node-1760261184295-1760261260906",
+    "source": "node-1760261133241",
+    "target": "node-1760261184295",
+    "label": "friend",
+    "type": "custom",
+    "data": {
+      "relationType": "friend"
+    }
+  },
+  {
+    "id": "edge-node-1760261133241-node-1760261204237-1760261270395",
+    "source": "node-1760261133241",
+    "target": "node-1760261204237",
+    "label": "friend",
+    "type": "custom",
+    "data": {
+      "relationType": "friend"
+    }
+  },
+  {
+    "id": "edge-node-1760261133241-node-1760261229347-1760261278285",
+    "source": "node-1760261133241",
+    "target": "node-1760261229347",
+    "label": "friend",
+    "type": "custom",
+    "data": {
+      "relationType": "friend"
+    }
+  },
+  {
+    "id": "edge-node-1760261229347-node-1760261587021-1760261604033",
+    "source": "node-1760261229347",
+    "target": "node-1760261587021",
+    "label": "influence",
+    "type": "custom",
+    "data": {
+      "relationType": "influence"
+    }
+  },
+  {
+    "id": "edge-node-1760261133241-node-1760261587021-1760261619257",
+    "source": "node-1760261133241",
+    "target": "node-1760261587021",
+    "label": "master_apprentice",
+    "type": "custom",
+    "data": {
+      "relationType": "master_apprentice"
+    }
+  }
+]
