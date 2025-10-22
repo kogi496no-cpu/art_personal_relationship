@@ -1,27 +1,32 @@
 import React from 'react';
-import { NodeProps } from 'reactflow';
-import { NodeResizer } from '@reactflow/node-resizer';
-
+import { Handle, NodeProps, Position } from 'reactflow';
+import { NodeResizer /*, NodeToolbar */ } from '@reactflow/node-resizer'; // NodeToolbarをコメントアウト
 import '@reactflow/node-resizer/dist/style.css';
+import { Typography } from '@mui/material'; // Typographyを追加
 
-const GroupNode = ({ data, selected }: NodeProps<{ label?: string }>) => {
+export type GroupNodeProps = NodeProps & {
+  label?: string;
+};
+
+const isValidConnection = (connection: any) => true; // For now, allow all connections
+
+export function GroupNode({ selected, data }: GroupNodeProps) {
   return (
-    <div style={{
-      border: '2px solid #777',
-      borderRadius: '15px',
-      background: 'rgba(0, 100, 255, 0.05)',
-    }}>
-      <NodeResizer 
-        isVisible={selected} 
-        minWidth={120} 
-        minHeight={120} 
-        style={{ pointerEvents: 'all' }}
-      />
-      {data.label && (
-        <div style={{ padding: '10px', fontWeight: 'bold', pointerEvents: 'all' }}>
-          {data.label}
+    <div className="group-node">
+      <NodeResizer isVisible={selected} minWidth={100} minHeight={50} />
+      {/* <NodeToolbar isVisible={selected} position={data.toolbarPosition}>
+        <div style={{
+          backgroundColor: 'white',
+          padding: '5px 10px',
+          borderRadius: '5px',
+          border: '1px solid #ccc'
+        }}>
+          {data.toolbarTitle}
         </div>
-      )}
+      </NodeToolbar> */}
+      <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main' }}>{data.label}</Typography>
+      <Handle type="target" position={Position.Top} isValidConnection={isValidConnection} style={{ background: '#555' }} />
+      <Handle type="source" position={Position.Bottom} isValidConnection={isValidConnection} style={{ background: '#555' }} />
     </div>
   );
 }
