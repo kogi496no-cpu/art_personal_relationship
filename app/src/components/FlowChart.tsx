@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -14,6 +14,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useFlow } from '@/hooks/useFlow';
 import AddNodeForm from './AddNodeForm';
@@ -56,6 +59,7 @@ function FlowChart() {
     groupSelectedNodes,
     clearAll,
   } = useFlow();
+  const [isPanelOpen, setIsPanelOpen] = useState(true);
 
   // nodesのz-indexを調整
   const adjustedNodes = nodes.map(node => {
@@ -97,60 +101,71 @@ function FlowChart() {
       <Card 
         variant="outlined"
         sx={{
-          width: '320px',
+          width: isPanelOpen ? '320px' : '56px',
+          minWidth: '56px',
           margin: 2,
           position: 'absolute',
           right: 0,
           top: 16,
           maxHeight: 'calc(100vh - 32px)',
-          overflowY: 'auto',
-          background: 'rgba(255, 255, 255, 0.9)'
+          overflow: 'hidden',
+          background: 'rgba(255, 255, 255, 0.9)',
+          transition: 'width 0.2s ease-in-out',
         }}
       >
-        <CardContent>
-          <Typography variant="h5" component="h2" gutterBottom>
-            操作パネル
-          </Typography>
-          <Divider sx={{ my: 2 }} />
-          <NodeDetail node={selectedNode} nodes={nodes} onSave={handleSaveNode} onRemoveFromGroup={handleRemoveFromGroup} />
-          <Divider sx={{ my: 2 }} />
-          <AddNodeForm onAddNode={addNode} />
-          <Divider sx={{ my: 2 }} />
-          <AddEdgeForm nodes={nodes} onAddEdge={addNewEdge} />
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>データ読み込み</Typography>
-          <UploadButton onUploadNodes={setNodes} onUploadEdges={setEdges} />
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>データ保存</Typography>
-          <DownloadButton nodes={nodes} edges={edges} />
-          <Divider sx={{ my: 2 }} />
-          <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>編集</Typography>
-          <Stack spacing={1}>
-            <Button 
-              variant="outlined" 
-              onClick={groupSelectedNodes}
-              disabled={selectedNodes.length < 2}
-            >
-              選択項目をグループ化
-            </Button>
-            <Button 
-              variant="outlined" 
-              color="error" 
-              onClick={deleteSelectedElements}
-              disabled={selectedNodes.length === 0 && selectedEdges.length === 0}
-            >
-              選択項目を削除
-            </Button>
-            <Button 
-              variant="contained" 
-              color="error" 
-              onClick={clearAll}
-              disabled={nodes.length === 0 && edges.length === 0}
-            >
-              すべてクリア
-            </Button>
-          </Stack>
-        </CardContent>
+        <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
+          <IconButton onClick={() => setIsPanelOpen(!isPanelOpen)} sx={{ mr: 1 }}>
+            {isPanelOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+          {isPanelOpen && (
+            <Typography variant="h5" component="h2" noWrap>
+              操作パネル
+            </Typography>
+          )}
+        </Box>
+        <Box sx={{ display: isPanelOpen ? 'block' : 'none', overflowY: 'auto', maxHeight: 'calc(100vh - 90px)' }}>
+          <CardContent>
+            <Divider sx={{ my: 2 }} />
+            <NodeDetail node={selectedNode} nodes={nodes} onSave={handleSaveNode} onRemoveFromGroup={handleRemoveFromGroup} />
+            <Divider sx={{ my: 2 }} />
+            <AddNodeForm onAddNode={addNode} />
+            <Divider sx={{ my: 2 }} />
+            <AddEdgeForm nodes={nodes} onAddEdge={addNewEdge} />
+            <Divider sx={{ my: 2 }} />
+            <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>データ読み込み</Typography>
+            <UploadButton onUploadNodes={setNodes} onUploadEdges={setEdges} />
+            <Divider sx={{ my: 2 }} />
+            <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>データ保存</Typography>
+            <DownloadButton nodes={nodes} edges={edges} />
+            <Divider sx={{ my: 2 }} />
+            <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>編集</Typography>
+            <Stack spacing={1}>
+              <Button 
+                variant="outlined" 
+                onClick={groupSelectedNodes}
+                disabled={selectedNodes.length < 2}
+              >
+                選択項目をグループ化
+              </Button>
+              <Button 
+                variant="outlined" 
+                color="error" 
+                onClick={deleteSelectedElements}
+                disabled={selectedNodes.length === 0 && selectedEdges.length === 0}
+              >
+                選択項目を削除
+              </Button>
+              <Button 
+                variant="contained" 
+                color="error" 
+                onClick={clearAll}
+                disabled={nodes.length === 0 && edges.length === 0}
+              >
+                すべてクリア
+              </Button>
+            </Stack>
+          </CardContent>
+        </Box>
       </Card>
     </Box>
   );
